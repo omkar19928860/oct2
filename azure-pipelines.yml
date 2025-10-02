@@ -86,24 +86,24 @@ stages:
            provider: 'azurerm'
            command: 'plan'
            workingDirectory: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}'
-           commandOptions: '-out=tfplan.binary'
+          #  commandOptions: '-out=tfplan.binary'
            environmentServiceNameAzureRM: 'hclservicrc'
-       - publish: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}/tfplan.binary'
-         artifact: terraformplan
- - stage: manualvalidation
-   displayName: Manual
-   dependsOn: terraformplan
-   jobs:
-     - job: validation
-       pool: server
-       steps:
-       - task: ManualValidation@1
-         inputs:
-           notifyUsers: 'omkarsingh9487@gmail.com'
-           onTimeout: 'resume'
+#        - publish: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}/tfplan.binary'
+#          artifact: terraformplan
+#  - stage: manualvalidation
+#    displayName: Manual
+#    dependsOn: terraformplan
+#    jobs:
+#      - job: validation
+#        pool: server
+#        steps:
+#        - task: ManualValidation@1
+#          inputs:
+#            notifyUsers: 'omkarsingh9487@gmail.com'
+#            onTimeout: 'resume'
  - stage: apply
    displayName: terraformapply
-   dependsOn: manualvalidation
+  #  dependsOn: manualvalidation
    condition: succeeded('manualvalidation')
    jobs:
      - job: apply
