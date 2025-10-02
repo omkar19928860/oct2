@@ -63,71 +63,71 @@ stages:
            backendAzureRmStorageAccountName: '$(select_storage)'
            backendAzureRmContainerName: '$(select_container)'
            backendAzureRmKey: 'dev.terraform.tfstate'
-#  - stage: terraformplan
-#    displayName: TERRAFORMPLAN
-#    dependsOn: terraforminit
-#    jobs:
-# 
+ - stage: terraformplan
+   displayName: TERRAFORMPLAN
+   dependsOn: terraforminit
+   jobs:
+
     
-#      - job: plan
-#        steps:
-#        - task: TerraformTask@5
-#          inputs:
-#            provider: 'azurerm'
-#            command: 'init'
-#            workingDirectory: '$(System.DefaultWorkingDirectory)${{ parameters.env }}'
-#            backendServiceArm: 'hclservicrc'
-#            backendAzureRmStorageAccountName: 'hclsa456233'
-#            backendAzureRmContainerName: 'tfstate'
-#            backendAzureRmKey: '$ {{  parameters.env }}.terraform.tfstate'
+     - job: plan
+       steps:
+       - task: TerraformTask@5
+         inputs:
+           provider: 'azurerm'
+           command: 'init'
+           workingDirectory: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}'
+           backendServiceArm: '$(select_svc)'
+           backendAzureRmStorageAccountName: '$(select_storage)'
+           backendAzureRmContainerName: '$(select_container)'
+           backendAzureRmKey: 'dev.terraform.tfstate'
        
-#        - task: TerraformTask@5
-#          inputs:
-#            provider: 'azurerm'
-#            command: 'plan'
-#            workingDirectory: '$(System.DefaultWorkingDirectory)${{ parameters.env }}'
-#            commandOptions: '-out=tfplan.binary'
-#            environmentServiceNameAzureRM: 'hclservicrc'
-#        - publish: '$(System.DefaultWorkingDirectory)${{ parameters.env }}/tfplan.binary'
-#          artifact: terraformplan
-#  - stage: manualvalidation
-#    displayName: Manual
-#    dependsOn: terraformplan
-#    jobs:
-#      - job: validation
-#        pool: server
-#        steps:
-#        - task: ManualValidation@1
-#          inputs:
-#            notifyUsers: 'omkarsingh9487@gmail.com'
-#            onTimeout: 'resume'
-#  - stage: apply
-#    displayName: terraformapply
-#    dependsOn: manualvalidation
-#    condition: succeeded('manualvalidation')
-#    jobs:
-#      - job: apply
-#        steps:
-#        - download: current
-#          artifact: terraformplan
-#        - task: TerraformTask@5
-#          inputs:
-#            provider: 'azurerm'
-#            command: 'init'
-#            workingDirectory: '$(System.DefaultWorkingDirectory)${{ parameters.env }}'
-#            backendServiceArm: 'hclservicrc'
-#            backendAzureRmStorageAccountName: 'hclsa456233'
-#            backendAzureRmContainerName: 'tfstate'
-#            backendAzureRmKey: '$ {{  parameters.env }}.terraform.tfstate' 
+       - task: TerraformTask@5
+         inputs:
+           provider: 'azurerm'
+           command: 'plan'
+           workingDirectory: '$(System.DefaultWorkingDirectory)${{ parameters.env }}'
+           commandOptions: '-out=tfplan.binary'
+           environmentServiceNameAzureRM: 'hclservicrc'
+       - publish: '$(System.DefaultWorkingDirectory)${{ parameters.env }}/tfplan.binary'
+         artifact: terraformplan
+ - stage: manualvalidation
+   displayName: Manual
+   dependsOn: terraformplan
+   jobs:
+     - job: validation
+       pool: server
+       steps:
+       - task: ManualValidation@1
+         inputs:
+           notifyUsers: 'omkarsingh9487@gmail.com'
+           onTimeout: 'resume'
+ - stage: apply
+   displayName: terraformapply
+   dependsOn: manualvalidation
+   condition: succeeded('manualvalidation')
+   jobs:
+     - job: apply
+       steps:
+       - download: current
+         artifact: terraformplan
+       - task: TerraformTask@5
+         inputs:
+           provider: 'azurerm'
+           command: 'init'
+           workingDirectory: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}'
+           backendServiceArm: '$(select_svc)'
+           backendAzureRmStorageAccountName: '$(select_storage)'
+           backendAzureRmContainerName: '$(select_container)'
+           backendAzureRmKey: 'dev.terraform.tfstate' 
 
        
 
-#        - task: TerraformTask@5
-#          inputs:
-#           provider: 'azurerm'
-#           command: 'apply'
-#           environmentServiceNameAzureRM: 'hclservicrc'
-#           workingDirectory: '$(System.DefaultWorkingDirectory)${{ parameters.env }}'
+       - task: TerraformTask@5
+         inputs:
+          provider: 'azurerm'
+          command: 'apply'
+          environmentServiceNameAzureRM: 'hclservicrc'
+          workingDirectory: '$(System.DefaultWorkingDirectory)${{ parameters.env }}'
 
 #  - stage: terraformdestroy
 #    displayName: terraformdestroy
