@@ -6,9 +6,9 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name  = "hclrg"
-    storage_account_name = "hclsa456233"
-    container_name       = "tfstate"
+    resource_group_name  = "subhdushera"
+    storage_account_name = "stgkamd"
+    container_name       = "cntstate"
     key                  = "dev.terraform.tfstate"
 
   }
