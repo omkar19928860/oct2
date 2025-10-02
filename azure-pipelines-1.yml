@@ -11,7 +11,7 @@ variables:
  - name : omkar-svc
    value: hclservicrc
  - name: priya_svc
-   value: priya
+   value: priyaserviceconnection
  - name: select_svc
 
    ${{ if eq(parameters.env , 'omkar') }}:
