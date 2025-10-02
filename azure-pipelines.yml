@@ -85,10 +85,10 @@ stages:
          inputs:
            provider: 'azurerm'
            command: 'plan'
-           workingDirectory: '$(System.DefaultWorkingDirectory)${{ parameters.env }}'
+           workingDirectory: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}'
            commandOptions: '-out=tfplan.binary'
            environmentServiceNameAzureRM: 'hclservicrc'
-       - publish: '$(System.DefaultWorkingDirectory)${{ parameters.env }}/tfplan.binary'
+       - publish: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}/tfplan.binary'
          artifact: terraformplan
  - stage: manualvalidation
    displayName: Manual
@@ -127,7 +127,7 @@ stages:
           provider: 'azurerm'
           command: 'apply'
           environmentServiceNameAzureRM: 'hclservicrc'
-          workingDirectory: '$(System.DefaultWorkingDirectory)${{ parameters.env }}'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}'
 
 #  - stage: terraformdestroy
 #    displayName: terraformdestroy
