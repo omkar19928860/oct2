@@ -104,7 +104,7 @@ stages:
  - stage: apply
    displayName: terraformapply
   #  dependsOn: manualvalidation
-   condition: succeeded('manualvalidation')
+  #  condition: succeeded('manualvalidation')
    jobs:
      - job: apply
        steps:
