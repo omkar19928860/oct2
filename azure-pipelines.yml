@@ -59,14 +59,15 @@ stages:
            provider: 'azurerm'
            command: 'init'
            workingDirectory: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}'
-           backendServiceArm: $'(select_svc)'
-           backendAzureRmStorageAccountName: $'(select_storage)'
-           backendAzureRmContainerName: $'(select_container)'
+           backendServiceArm: '$(select_svc)'
+           backendAzureRmStorageAccountName: '$(select_storage)'
+           backendAzureRmContainerName: '$(select_container)'
            backendAzureRmKey: 'dev.terraform.tfstate'
 #  - stage: terraformplan
 #    displayName: TERRAFORMPLAN
 #    dependsOn: terraforminit
 #    jobs:
+# 
     
 #      - job: plan
 #        steps:
