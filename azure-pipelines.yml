@@ -108,8 +108,8 @@ stages:
    jobs:
      - job: apply
        steps:
-       - download: current
-         artifact: terraformplan
+      #  - download: current
+      #    artifact: terraformplan
        - task: TerraformTask@5
          inputs:
            provider: 'azurerm'
