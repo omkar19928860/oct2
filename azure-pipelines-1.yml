@@ -62,7 +62,8 @@ stages:
            backendServiceArm: '$(select_svc)'
            backendAzureRmStorageAccountName: '$(select_storage)'
            backendAzureRmContainerName: '$(select_container)'
-           backendAzureRmKey: 'dev.terraform.tfstate'
+          #  backendAzureRmKey: 'dev.terraform.tfstate'
+           backendAzureRmKey: '$ {{  parameters.env }}.terraform.tfstate'  
  - stage: terraformplan
    displayName: TERRAFORMPLAN
    dependsOn: terraforminit
@@ -79,7 +80,7 @@ stages:
            backendServiceArm: '$(select_svc)'
            backendAzureRmStorageAccountName: '$(select_storage)'
            backendAzureRmContainerName: '$(select_container)'
-           backendAzureRmKey: 'dev.terraform.tfstate'
+           backendAzureRmKey: '$ {{  parameters.env }}.terraform.tfstate'  
        
        - task: TerraformTask@5
          inputs:
@@ -118,7 +119,7 @@ stages:
            backendServiceArm: '$(select_svc)'
            backendAzureRmStorageAccountName: '$(select_storage)'
            backendAzureRmContainerName: '$(select_container)'
-           backendAzureRmKey: 'dev.terraform.tfstate' 
+           backendAzureRmKey: '$ {{  parameters.env }}.terraform.tfstate'  
 
        
 
