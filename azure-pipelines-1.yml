@@ -16,8 +16,8 @@ variables:
 
    ${{ if eq(parameters.env , 'omkar') }}:
     value: hclservicrc
-   ${{else}}:
-    value: priya 
+   ${{ if eq(parameters.env, 'priya') }}:
+    value: priya
 
 #variable for storageaccount
  
