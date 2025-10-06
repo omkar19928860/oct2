@@ -9,13 +9,13 @@ parameters:
 #variable for Serviceaccount
 variables: 
  - name : omkar-svc
-   value: hclservicrc
+   value: HCL-omkar
  - name: priya_svc
    value: priya
  - name: select_svc
 
    ${{ if eq(parameters.env , 'omkar') }}:
-    value: hclservicrc
+    value: HCL-omkar
    ${{else}}:
     value: priya 
 
